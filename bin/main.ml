@@ -1,1 +1,10 @@
-let () = print_endline "Hello, World!"
+open Icpc_domestic2022
+
+let () =
+  (* NOTE: `Sys.argv` must contain a command name at the first. *)
+  match Sys.argv.(1) with
+  | "a" -> A.solve ()
+  (* | "b" -> B.solve () *)
+  (* | "c" -> C.solve () *)
+  (* | "d" -> D.solve () *)
+  | _ -> raise Util.InvalidInput
