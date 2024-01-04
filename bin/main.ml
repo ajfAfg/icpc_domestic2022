@@ -6,5 +6,5 @@ let () =
   | "a" -> A.solve ()
   | "b" -> B.solve ()
   (* | "c" -> C.solve () *)
-  (* | "d" -> D.solve () *)
-  | _ -> raise Util.InvalidInput
+  | "d" -> D.solve ()
+  | _ -> raise Util.Invalid_input
