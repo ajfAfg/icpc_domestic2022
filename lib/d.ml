@@ -95,24 +95,15 @@ let count_splittable_part xs =
     0
   @@ List.tl xs_with_index
 
+let rec merge xs ys =
+  match (xs, ys) with
+  | [], [] -> []
+  | [], ys -> ys
+  | xs, [] -> xs
+  | x :: xs', y :: ys' -> if x < y then x :: merge xs' ys else y :: merge xs ys'
+
 let exists_solution k partitioned_ss ts =
-  let rec merge = function
-    | [] -> []
-    | _ as partition_ss -> (
-        match
-          List.sort
-            (fun ys ys' ->
-              match (ys, ys') with
-              | y :: _, y' :: _ -> compare y y'
-              | _ -> raise @@ Invalid_argument "exists_solution")
-            partition_ss
-        with
-        | [] -> []
-        | (x :: []) :: xss -> x :: merge xss
-        | (x :: xs) :: xss -> x :: (merge @@ (xs :: xss))
-        | [] :: _ -> raise @@ Invalid_argument "exists_solution")
-  in
-  List.length partitioned_ss <= k && ts = merge partitioned_ss
+  List.length partitioned_ss <= k && ts = List.fold_left merge [] partitioned_ss
 
 let solve () =
   Util.read_input "0 0" |> Dataset.parse_input
